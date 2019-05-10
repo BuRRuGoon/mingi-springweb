@@ -21,15 +21,6 @@ public class RegisterController {
 	
 	static final Logger logger = LogManager.getLogger();
 	
-	@RequestMapping("/main")
-	public String main() {
-		return "main";
-	}
-	
-	@RequestMapping("/register/step1")
-	public String handleStep1() {
-		return "register/step1";
-	}
 	
 	@PostMapping("/register/step2")
 	public String handleStep2(@RequestParam(value = "agree", defaultValue = "false") Boolean agree) {
@@ -53,7 +44,7 @@ public class RegisterController {
 	}
 	
 	@GetMapping("/members")
-	public String members(
+	public void members(
 			@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
 		final int COUNT = 100;
 		int offset = (page - 1) * COUNT;
@@ -62,6 +53,5 @@ public class RegisterController {
 		
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("members", memberList);
-		return "members";
 	}
 }
