@@ -2,6 +2,9 @@ package org.mingi.article;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
+import org.mingi.book.chap11.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,16 +49,26 @@ public class ArticleController {
 	 * 글 등록 화면
 	 */
 	@GetMapping("/article/addForm")
-	public void articleAddForm() {
+	public String articleAddForm(HttpSession session) {
+		Object memberObj = session.getAttribute("MEMBER");
+		if(memberObj == null)
+			return "redirect:/app/loginForm";
+		return "article/addForm";
 	}
 
 	/**
 	 * 글 등록
 	 */
 	@PostMapping("/article/add")
-	public String articleAdd(Article article) {
-		article.setUserId("2015041014");
-		article.setName("한민기");
+	public String articleAdd(Article article,HttpSession session) {
+		Object memberObj = session.getAttribute("MEMBER");
+		if(memberObj == null)
+			
+			return "redirect:/loginForm";
+		
+		Member member = (Member) memberObj;
+		article.setUserId(member.getMemberId());
+		article.setName(member.getName());
 		articleDao.addArticle(article);
 		return "redirect:/app/article/list";
 }
