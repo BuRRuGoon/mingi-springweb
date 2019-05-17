@@ -11,7 +11,6 @@
 		<a href="./app/article/list">글 목록</a>
 	</p>
 	<form action="./app/article/add" method="post">
-	<p>회원번호 : ${MEMBER.memberId }</p>
 	<p>회원이름 : ${MEMBER.name }</p>
 		<p>제목 :</p>
 		<p>
