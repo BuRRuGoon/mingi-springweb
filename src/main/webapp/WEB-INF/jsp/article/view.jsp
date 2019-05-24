@@ -6,9 +6,12 @@
 <title>게시판</title>
 </head>
 <body>
+	<%@ include file="/WEB-INF/jsp/header.jsp"%>
 	<h2>글 보기</h2>
 	<p>
-		<a href="./app/article/list">글 목록</a>
+		<a href="./app/article/list">글 목록</a> ||
+		<a href="./app/article/updateForm">글 수정</a> ||
+		<a href="./app/atrilce/deleteForm">글 삭제</a>
 	</p>
 	<hr />
 	<p>

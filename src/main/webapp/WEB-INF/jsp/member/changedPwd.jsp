@@ -1,15 +1,16 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!doctype html>
-<!-- p.358 [리스트 13.8] 로그인 성공 화면 수정 -->
 <html>
 <head>
 <base href="${pageContext.request.contextPath }/" />
-<title>로그인</title>
+<title>개인정보</title>
 </head>
 <body>
 	<%@ include file="/WEB-INF/jsp/header.jsp"%>
-	<p>${sessionScope.MEMBER.name }님, 로그인에 성공했습니다.</p>
+	<h2>비밀번호 변경 완료</h2>
+	<p>비밀번호가 변경되었습니다.</p>
 	<p>
 		<a href="./">메인으로 가기</a>
 	</p>
 </body>
-<body>
+</html>

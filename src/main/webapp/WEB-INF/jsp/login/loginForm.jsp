@@ -7,6 +7,7 @@
 <title>로그인</title>
 </head>
 <body>
+	<%@ include file="/WEB-INF/jsp/header.jsp"%>
 	<form action="./app/login" method="post">
 		<c:if test="${param.mode=='FAILURE' }">
 			<p style="color: red;">이메일이 없거나 비밀번호가 틀립니다.</p>
