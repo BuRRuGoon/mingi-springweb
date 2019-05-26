@@ -42,7 +42,9 @@ public class ArticleController {
 	@GetMapping("/article/view")
 	public void articleView(@RequestParam("articleId") String articleId,
 			Model model) {
+		
 		Article article = articleDao.getArticle(articleId);
+		article.getUserId();
 		model.addAttribute("article", article);
 	}
 
@@ -69,15 +71,40 @@ public class ArticleController {
 		articleDao.addArticle(article);
 		return "redirect:/app/article/list";
 }
-	/**
-	 * 글 삭
-	 */
-	@PostMapping("/article/delete")
-	public String articleDelete(Article article,HttpSession session,
-			@SessionAttribute("MEMBER") Member member) {
 	
-		article.setUserId(member.getMemberId());
-		articleDao.deleteArticle("articleId");
+	/**
+	 * 글 수정
+	 */
+	
+	@GetMapping("/article/updateForm")
+	public void articleupdateForm(Article article,HttpSession session,
+			@RequestParam("articleId") String articleId,
+			@SessionAttribute("MEMBER") Member member, Model model) {
+		
+		article = articleDao.getArticle(articleId);
+		article.getUserId();
+		model.addAttribute("article", article);
+		
+	}
+	
+	@PostMapping("/article/update")
+	public String articleUpdate(Article article,HttpSession session,
+			@SessionAttribute("MEMBER") Member member) {
+		
+		article.setArticleId(article.articleId);
+		articleDao.updateArticle(article);
 		return "redirect:/app/article/list";
-}
+	}
+	
+	/**
+	 * 글 삭제
+	 */
+	@GetMapping("/article/delete")
+	public String articleDelete(Article article,HttpSession session,
+			@RequestParam("articleId") String articleId,
+			@SessionAttribute("MEMBER") Member member) {
+		
+		articleDao.deleteArticle(articleId);
+		return "redirect:/app/article/list";
+	}
 }
