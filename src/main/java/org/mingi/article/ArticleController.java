@@ -104,6 +104,10 @@ public class ArticleController {
 			@RequestParam("articleId") String articleId,
 			@SessionAttribute("MEMBER") Member member) {
 		
+		article = articleDao.getArticle(articleId);
+		if(!member.getMemberId().equals(article.getUserId()))
+			return "redirect:/app/article/view?articleId="+articleId;
+		
 		articleDao.deleteArticle(articleId);
 		return "redirect:/app/article/list";
 	}

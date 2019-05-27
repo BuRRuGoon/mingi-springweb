@@ -29,5 +29,8 @@
 		</p>
 			</form>
 		</c:when>
+		<c:otherwise>
+			<p>해당 게시글에 수정 권한이 없습니다.</p>
+		</c:otherwise>
 	</c:choose>
 </body>
