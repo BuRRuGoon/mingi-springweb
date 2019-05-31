@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.mingi.book.chap11.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ public class ArticleController {
 	@Autowired
 	ArticleDao articleDao;
 
+	static final Logger logger = LogManager.getLogger();
 	/**
 	 * 글 목록
 	 */
@@ -80,9 +83,12 @@ public class ArticleController {
 	public void articleupdateForm(Article article,HttpSession session,
 			@RequestParam("articleId") String articleId,
 			@SessionAttribute("MEMBER") Member member, Model model) {
-		
 		article = articleDao.getArticle(articleId);
 		article.getUserId();
+		
+		if(!member.getMemberId().equals(article.getUserId()))
+			throw new RuntimeException("수정 권한이 없습니다");
+		
 		model.addAttribute("article", article);
 		
 	}
@@ -90,10 +96,16 @@ public class ArticleController {
 	@PostMapping("/article/update")
 	public String articleUpdate(Article article,HttpSession session,
 			@SessionAttribute("MEMBER") Member member) {
+		article.setUserId(member.getMemberId());
+
+		int updatedRows = articleDao.updateArticle(article);
 		
-		article.setArticleId(article.articleId);
-		articleDao.updateArticle(article);
-		return "redirect:/app/article/list";
+		// 권한 체크 : 글이 수정되었는지 확인
+				if (updatedRows == 0)
+					// 글이 수정되지 않음. 자신이 쓴 글이 아님
+					throw new RuntimeException("수정 권한이 없습니다");
+
+		return "redirect:/app/article/view?articleId=" + article.getArticleId();
 	}
 	
 	/**
@@ -103,12 +115,16 @@ public class ArticleController {
 	public String articleDelete(Article article,HttpSession session,
 			@RequestParam("articleId") String articleId,
 			@SessionAttribute("MEMBER") Member member) {
+		int updatedRows = articleDao.deleteArticle(articleId,
+				member.getMemberId());
 		
-		article = articleDao.getArticle(articleId);
-		if(!member.getMemberId().equals(article.getUserId()))
-			return "redirect:/app/article/view?articleId="+articleId;
-		
-		articleDao.deleteArticle(articleId);
-		return "redirect:/app/article/list";
+		// 권한 체크 : 글이 삭제되었는지 확인
+				if (updatedRows == 0)
+					// 글이 삭제되지 않음. 자신이 쓴 글이 아님
+					throw new RuntimeException("삭제 권한이 없습니다");
+
+
+				logger.debug("글을 삭제했습니다. articleId={}", articleId);
+				return "redirect:/app/article/list";
 	}
 }

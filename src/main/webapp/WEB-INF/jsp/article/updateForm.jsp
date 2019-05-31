@@ -26,11 +26,13 @@
 		</p>
 		<p>
 			<button type="submit">수정</button>
+			<button type="button" onclick="history.back();">취소</button>
 		</p>
 			</form>
 		</c:when>
 		<c:otherwise>
 			<p>해당 게시글에 수정 권한이 없습니다.</p>
+			<button type="button" onclick="history.back();">돌아가기</button>
 		</c:otherwise>
 	</c:choose>
 </body>
