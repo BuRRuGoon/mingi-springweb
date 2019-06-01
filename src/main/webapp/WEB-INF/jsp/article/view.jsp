@@ -4,19 +4,25 @@
 <head>
 <base href="${pageContext.request.contextPath }/" />
 <title>게시판</title>
+<script type="text/javascript">
+	function confirmDelete() {
+		if (confirm("삭제하시겠습니까?"))
+			return true;
+		else
+			return false;
+	}
+</script>
 </head>
 <body>
 	<%@ include file="/WEB-INF/jsp/header.jsp"%>
 	<h2>글 보기</h2>
 	<p>
 		<a href="./app/article/list">글 목록</a>
-		<c:choose>
-		<c:when test="${sessionScope.MEMBER.memberId==article.userId }">
+		<c:if test="${sessionScope.MEMBER.memberId==article.userId }">
 		 ||
 		<a href="./app/article/updateForm?articleId=${article.articleId }">글 수정</a> ||
-		<a href="./app/article/delete?articleId=${article.articleId }">글 삭제</a>
-		</c:when>
-		</c:choose>
+		<a href="./app/article/delete?articleId=${article.articleId }" onclick="return confirmDelete();">글 삭제</a>
+		</c:if>
 	</p>
 	<hr />
 	<p>

@@ -17,6 +17,12 @@
 			<p>
 				<a href="./app/logout">[로그아웃]</a>
 			</p>
+			<p>
+				<a href="./app/letter/listReceived">[받은편지함]</a>
+			</p>
+			<p>
+				<a href="./app/letter/listSent">[보낸편지함]</a>
+			</p>
 		</c:when>
 		<c:otherwise>
 			<!-- 로그인 하지 않았을 경우 -->
