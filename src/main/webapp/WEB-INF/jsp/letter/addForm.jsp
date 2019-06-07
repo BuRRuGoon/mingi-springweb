@@ -22,8 +22,6 @@
 		<p>
 			<textarea name="content" style="width: 100%; height: 200px;" required></textarea>
 		</p>
-			<input type="hidden" name="receiverId" value="${param.receiverId}" required>
-			<input type="hidden" name="receiverName" value="${param.receiverName}" required>
 		<p>
 			<button type="submit">쓰기</button>
 		</p>

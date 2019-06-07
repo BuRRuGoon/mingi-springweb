@@ -27,7 +27,7 @@
 		</c:choose>
 		<a href="./app/letter/delete?letterId=${letter.letterId }&mode=${param.mode}"
 			onclick="return confirmDelete();">삭제</a>
-</p>
+	</p>
 	<hr/>
 	<p>
 		<span style="font-weight: bold;">메일제목 : ${letter.title } </span>
