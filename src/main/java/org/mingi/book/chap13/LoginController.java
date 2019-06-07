@@ -40,7 +40,8 @@ public class LoginController {
 			return "redirect:" + returnUrl;
 		} catch (EmptyResultDataAccessException e) {
 			logger.debug("로그인 실패. email={}", email);
-			return "redirect:/app/loginForm?&mode=FAILURE&email=" + email;
+			return "redirect:/app/loginForm?&mode=FAILURE&email=" + email
+					+ "&returnUrl" + returnUrl;
 		}
 	}
 
